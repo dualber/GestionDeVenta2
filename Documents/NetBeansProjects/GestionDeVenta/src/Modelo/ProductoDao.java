@@ -18,16 +18,15 @@ public class ProductoDao {
 
     public boolean registrarProducto(Producto pr) {
 
-        String sql = "INSERT INTO producto(codigo, nombre, proveedor, stock, precio) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO producto(codigo, nombre,stock, precio) VALUES (?,?,?,?)";
 
         try {
             con = cn.getConnetion();
             ps = con.prepareStatement(sql);
             ps.setString(1, pr.getCodigo());
             ps.setString(2, pr.getNombre());
-            ps.setString(3, pr.getProveedor());
-            ps.setInt(4, pr.getStock());
-            ps.setDouble(5, pr.getPrecio());
+            ps.setInt(3, pr.getStock());
+            ps.setDouble(4, pr.getPrecio());
             ps.execute();
 
             return true;
@@ -60,7 +59,6 @@ public class ProductoDao {
                 pro.setId(rs.getInt("id"));
                 pro.setCodigo(rs.getString("codigo"));
                 pro.setNombre(rs.getString("nombre"));
-                pro.setProveedor(rs.getString("proveedor"));
                 pro.setStock(rs.getInt("stock"));
                 pro.setPrecio(rs.getDouble("precio"));
                 listaPro.add(pro);
@@ -110,19 +108,17 @@ public class ProductoDao {
     }
 
     public boolean modificarProducto(Producto pro) {
-        String sql = "UPDATE producto SET codigo=?, nombre=?, Proveedor=?,stock=?,precio=? WHERE id=?";
+        String sql = "UPDATE producto SET codigo=?, nombre=?,stock=?,precio=? WHERE id=?";
 
         try {
             con = cn.getConnetion();
             ps = con.prepareStatement(sql);
             ps.setString(1, pro.getCodigo());
             ps.setString(2, pro.getNombre());
-            ps.setString(3, pro.getProveedor());
-            ps.setInt(4, pro.getStock());
-            ps.setDouble(5, pro.getPrecio());
-            ps.setInt(6, pro.getId());
+            ps.setInt(3, pro.getStock());
+            ps.setDouble(4, pro.getPrecio());
+            ps.setInt(5, pro.getId());
             ps.execute();
-            JOptionPane.showMessageDialog(null, "se registró");
             return true;
         } catch (SQLException e) {
             System.out.println(e.toString());
@@ -146,7 +142,6 @@ public class ProductoDao {
             ps.setString(1, codigo);
              rs = ps.executeQuery();
             if (rs.next()) {
-
                 pro.setNombre(rs.getString("nombre"));
                 pro.setPrecio(rs.getDouble("precio"));
                 pro.setStock(rs.getInt("stock"));

@@ -1,4 +1,3 @@
-
 package Modelo;
 
 import com.mysql.jdbc.PreparedStatement;
@@ -10,11 +9,12 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class ClienteDao {
+
     Conexion cn = new Conexion(); // se llama la clase que crea la conexion con la base de datos.
     Connection con; // comando para implementar los scrips de sql.
     PreparedStatement ps; // comando para enviar los parametros a la base de datos.
     ResultSet rs;
-    
+
     /*
     pasos para realizar una insercion de un objeto a una base de datos.
     paso 1: inicializar la variables necesesarias como Conexion, connection y PrepareStatement.
@@ -27,9 +27,8 @@ public class ClienteDao {
     paso 8: en el catch implementar el SQLexeption y mostrar un mensaje en caso tal alla un error. y retornar false.}
     paso 9: dentro de finnally realizar otro try catch y cerrar la conexion con la base de datos.
     paso 10: en el catch implemetar un SQLexeption e implementar un mensaje de error 
-    */
-    
-    public boolean RegistrarCliente(Cliente cl){
+     */
+    public boolean RegistrarCliente(Cliente cl) {
         String sql = "INSERT INTO clientes(cedula, nombre, telefono, direccion, razon_social) VALUES (?,?,?,?,?)";
         //comando sql para insertar un nuevo cliente.
         try {
@@ -41,15 +40,14 @@ public class ClienteDao {
             ps.setString(4, cl.getDireccion()); // se envian los parametros del objeto cliente
             ps.setString(5, cl.getRazon()); // se envian los parametros del objeto cliente
             ps.execute(); // se ejecuta el envio de parametos, la cual es necesario para enviarse. 
-            
+
             return true;  // se retorna  como vedadero el envio de datos a la base 
         } catch (SQLException e) {
             // si algo sale mal, se envia un mensaje de error y se retorna false.
-            JOptionPane.showMessageDialog(null, e.toString()); 
+            JOptionPane.showMessageDialog(null, e.toString());
             return false;
-        }
-        // como siguiente se crea un nuevo try chatch en un finally para cerrar la conexion.
-        finally{
+        } // como siguiente se crea un nuevo try chatch en un finally para cerrar la conexion.
+        finally {
             try {
                 con.close(); // cerramos la conexion 
             } catch (SQLException e) {
@@ -57,17 +55,17 @@ public class ClienteDao {
             }
         }
     }
-    
-    public List listarClientes(){
-      List<Cliente> ListaCl = new ArrayList();
-      String sql = "SELECT * FROM clientes";
-      
+
+    public List listarClientes() {
+        List<Cliente> ListaCl = new ArrayList();
+        String sql = "SELECT * FROM clientes";
+
         try {
             con = cn.getConnetion();
-            ps= (PreparedStatement) con.prepareStatement(sql);
+            ps = (PreparedStatement) con.prepareStatement(sql);
             rs = ps.executeQuery();
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 Cliente cl = new Cliente();
                 cl.setId(rs.getInt("id"));
                 cl.setCedula(rs.getString("cedula"));
@@ -82,19 +80,19 @@ public class ClienteDao {
         }
         return ListaCl;
     }
-    
-    public boolean EliminarCliente(int id){
-        String sql= "DELETE FROM clientes WHERE id=?";
-        
+
+    public boolean EliminarCliente(int id) {
+        String sql = "DELETE FROM clientes WHERE id=?";
+
         try {
-            ps =(PreparedStatement) con.prepareStatement(sql);
+            ps = (PreparedStatement) con.prepareStatement(sql);
             ps.setInt(1, id);
             ps.execute();
             return true;
         } catch (SQLException e) {
             System.out.println(e.toString());
             return false;
-        }finally{
+        } finally {
             try {
                 con.close();
             } catch (SQLException ex) {
@@ -102,31 +100,52 @@ public class ClienteDao {
             }
         }
     }
-    public boolean ModificarCliente(Cliente cl){
-        String sql ="UPDATE clientes SET cedula=?, nombre=?, telefono=?, direccion=?, razon_social=? WHERE id=?";
+
+    public boolean ModificarCliente(Cliente cl) {
+        String sql = "UPDATE clientes SET cedula=?, nombre=?, telefono=?, direccion=?, razon_social=? WHERE id=?";
         try {
-           ps= (PreparedStatement) con.prepareStatement(sql);
-           ps.setString(1, cl.getCedula());
-           ps.setString(2, cl.getNombre());
-           ps.setString(3, cl.getTelefono());
-           ps.setString(4, cl.getDireccion());
-           ps.setString(5, cl.getRazon());
-           ps.setInt(6, cl.getId());
-           ps.execute();
-           return true;
-           
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            ps.setString(1, cl.getCedula());
+            ps.setString(2, cl.getNombre());
+            ps.setString(3, cl.getTelefono());
+            ps.setString(4, cl.getDireccion());
+            ps.setString(5, cl.getRazon());
+            ps.setInt(6, cl.getId());
+            ps.execute();
+            return true;
+
         } catch (SQLException e) {
             System.out.println(e.toString());
             return false;
-        }finally{
+        } finally {
             try {
                 con.close();
             } catch (SQLException ex) {
                 System.out.println(ex.toString());
             }
         }
-        
+
+    }
+
+    public Cliente BuscarCLiente(String cedula) {
+        Cliente cl = new Cliente();
+
+        String sql = "SELECT *FROM clientes WHERE cedula=?";
+        try {
+            con = cn.getConnetion();
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            ps.setString(1, cedula);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                cl.setNombre(rs.getString("nombre"));
+                cl.setTelefono(rs.getString("nombre"));
+                cl.setDireccion(rs.getString("nombre"));
+                cl.setRazon(rs.getString("nombre"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return cl;
     }
 }
-
-

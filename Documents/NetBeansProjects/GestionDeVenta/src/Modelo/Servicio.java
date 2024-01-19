@@ -1,22 +1,25 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package Modelo;
 
 
-public class Producto {
-    private int id;
-    private String codigo;
-    private String nombre;
-    private int stock;
-    private double precio;
+public class Servicio {
+   private int id;
+   private String codigo;
+   private String nombre;
+   private double precio;
 
-    public Producto() {
-    }
-
-    public Producto(int id, String codigo, String nombre, int stock, double precio) {
+   public Servicio(){
+       
+   }
+   
+   
+    public Servicio(int id, String codigo, String nombre, double precio) {
         this.id = id;
         this.codigo = codigo;
         this.nombre = nombre;
-        this.stock = stock;
         this.precio = precio;
     }
 
@@ -27,7 +30,7 @@ public class Producto {
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public String getCodigo() {
         return codigo;
     }
@@ -44,14 +47,6 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
     public double getPrecio() {
         return precio;
     }
@@ -59,6 +54,7 @@ public class Producto {
     public void setPrecio(double precio) {
         this.precio = precio;
     }
-    
-    
+   
+   
+   
 }
