@@ -1,24 +1,24 @@
-
 package Modelo;
 
 public class Cliente {
+
     private int id;
     private String cedula;
     private String nombre;
     private String telefono;
     private String direccion;
-    private String razon;
-    
-    public Cliente(){
-        
+
+    public Cliente() {
+
     }
-    public Cliente(int id, String cedula, String nombre, String telefono, String direccion, String razon) {
+
+    public Cliente(int id, String cedula, String nombre, String telefono, String direccion) {
         this.id = id;
         this.cedula = cedula;
         this.nombre = nombre;
         this.telefono = telefono;
         this.direccion = direccion;
-        this.razon = razon;
+
     }
 
     public int getId() {
@@ -60,14 +60,4 @@ public class Cliente {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
-
-    public String getRazon() {
-        return razon;
-    }
-
-    public void setRazon(String razon) {
-        this.razon = razon;
-    }
-    
-    
 }

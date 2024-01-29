@@ -29,7 +29,7 @@ public class ClienteDao {
     paso 10: en el catch implemetar un SQLexeption e implementar un mensaje de error 
      */
     public boolean RegistrarCliente(Cliente cl) {
-        String sql = "INSERT INTO clientes(cedula, nombre, telefono, direccion, razon_social) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO clientes(cedula, nombre, telefono, direccion) VALUES (?,?,?,?)";
         //comando sql para insertar un nuevo cliente.
         try {
             con = cn.getConnetion(); // se inicia una conexion 
@@ -38,7 +38,6 @@ public class ClienteDao {
             ps.setString(2, cl.getNombre()); // se envian los parametros del objeto cliente
             ps.setString(3, cl.getTelefono()); // se envian los parametros del objeto cliente
             ps.setString(4, cl.getDireccion()); // se envian los parametros del objeto cliente
-            ps.setString(5, cl.getRazon()); // se envian los parametros del objeto cliente
             ps.execute(); // se ejecuta el envio de parametos, la cual es necesario para enviarse. 
 
             return true;  // se retorna  como vedadero el envio de datos a la base 
@@ -72,7 +71,6 @@ public class ClienteDao {
                 cl.setNombre(rs.getString("nombre"));
                 cl.setTelefono(rs.getString("Telefono"));
                 cl.setDireccion(rs.getString("Direccion"));
-                cl.setRazon(rs.getString("razon_social"));
                 ListaCl.add(cl);
             }
         } catch (SQLException e) {
@@ -102,15 +100,14 @@ public class ClienteDao {
     }
 
     public boolean ModificarCliente(Cliente cl) {
-        String sql = "UPDATE clientes SET cedula=?, nombre=?, telefono=?, direccion=?, razon_social=? WHERE id=?";
+        String sql = "UPDATE clientes SET cedula=?, nombre=?, telefono=?, direccion=? WHERE id=?";
         try {
             ps = (PreparedStatement) con.prepareStatement(sql);
             ps.setString(1, cl.getCedula());
             ps.setString(2, cl.getNombre());
             ps.setString(3, cl.getTelefono());
             ps.setString(4, cl.getDireccion());
-            ps.setString(5, cl.getRazon());
-            ps.setInt(6, cl.getId());
+            ps.setInt(5, cl.getId());
             ps.execute();
             return true;
 
@@ -139,9 +136,8 @@ public class ClienteDao {
 
             if (rs.next()) {
                 cl.setNombre(rs.getString("nombre"));
-                cl.setTelefono(rs.getString("nombre"));
-                cl.setDireccion(rs.getString("nombre"));
-                cl.setRazon(rs.getString("nombre"));
+                cl.setTelefono(rs.getString("telefono"));
+                cl.setDireccion(rs.getString("direccion"));
             }
         } catch (SQLException e) {
             System.out.println(e.toString());

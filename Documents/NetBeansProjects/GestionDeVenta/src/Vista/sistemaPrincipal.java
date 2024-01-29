@@ -1,4 +1,3 @@
-
 package Vista;
 
 import Modelo.Cliente;
@@ -14,8 +13,26 @@ import Modelo.ServicioDao;
 import Modelo.TextPrompt;
 import Modelo.Venta;
 import Modelo.VentaDao;
+
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileOutputStream;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -57,6 +74,7 @@ public class sistemaPrincipal extends javax.swing.JFrame {
         txtIdProducto.setVisible(false);
         jLabelIdProducto.setVisible(false);
 
+        //implementar comentarios internos en los textFields
         TextPrompt Cedula = new TextPrompt("ingresa la cedula", txtCedulaCliente);
 
     }
@@ -64,14 +82,13 @@ public class sistemaPrincipal extends javax.swing.JFrame {
     public void listarCliente() {
         List<Cliente> listarCL = clDao.listarClientes();
         modelo = (DefaultTableModel) tableCliente.getModel();
-        Object[] ob = new Object[6];
+        Object[] ob = new Object[5];
         for (int i = 0; i < listarCL.size(); i++) {
             ob[0] = listarCL.get(i).getId();
             ob[1] = listarCL.get(i).getCedula();
             ob[2] = listarCL.get(i).getNombre();
             ob[3] = listarCL.get(i).getTelefono();
             ob[4] = listarCL.get(i).getDireccion();
-            ob[5] = listarCL.get(i).getRazon();
             modelo.addRow(ob);
         }
         tableCliente.setModel(modelo);
@@ -136,6 +153,43 @@ public class sistemaPrincipal extends javax.swing.JFrame {
         txtPrecioVenta1 = new javax.swing.JTextField();
         labelTotalapagar2 = new javax.swing.JLabel();
         jTabbedPane8 = new javax.swing.JTabbedPane();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        txtCedulaClienteVenta = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        txtDescripcionServicioVenta = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        txtCantidadServicioVenta = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        txtPrecioServicioVenta = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        txtStockVenta1 = new javax.swing.JTextField();
+        txtStockVenta = new javax.swing.JTextField();
+        btnEliminarVenta = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableVenta = new javax.swing.JTable();
+        jLabel13 = new javax.swing.JLabel();
+        txtNombreClienteVenta = new javax.swing.JTextField();
+        btnImprimirVenta = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        jlabel3 = new javax.swing.JLabel();
+        labelDevolucion = new javax.swing.JLabel();
+        txtCodigoVenta = new javax.swing.JTextField();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        txtDescripcionVenta = new javax.swing.JTextField();
+        jLabel35 = new javax.swing.JLabel();
+        txtCantidadVenta = new javax.swing.JTextField();
+        jLabel36 = new javax.swing.JLabel();
+        txtPrecioVenta = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        labelValorPagado = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        labelTotalapagar = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        txtCodigoServicioVenta = new javax.swing.JTextField();
+        jLabel39 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         txtIdCliente = new javax.swing.JTextField();
@@ -194,42 +248,6 @@ public class sistemaPrincipal extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         TableGenerarVenta = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        txtCedulaClienteVenta = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        txtDescripcionServicioVenta = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        txtCantidadServicioVenta = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        txtPrecioServicioVenta = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
-        txtStockVenta1 = new javax.swing.JTextField();
-        txtStockVenta = new javax.swing.JTextField();
-        btnEliminarVenta = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tableVenta = new javax.swing.JTable();
-        jLabel13 = new javax.swing.JLabel();
-        txtNombreClienteVenta = new javax.swing.JTextField();
-        btnImprimirVenta = new javax.swing.JButton();
-        jLabel14 = new javax.swing.JLabel();
-        jlabel3 = new javax.swing.JLabel();
-        labelDevolucion = new javax.swing.JLabel();
-        txtCodigoVenta = new javax.swing.JTextField();
-        jLabel33 = new javax.swing.JLabel();
-        jLabel34 = new javax.swing.JLabel();
-        txtDescripcionVenta = new javax.swing.JTextField();
-        jLabel35 = new javax.swing.JLabel();
-        txtCantidadVenta = new javax.swing.JTextField();
-        jLabel36 = new javax.swing.JLabel();
-        txtPrecioVenta = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        labelValorPagado = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        labelTotalapagar = new javax.swing.JLabel();
-        jLabel37 = new javax.swing.JLabel();
-        jLabel38 = new javax.swing.JLabel();
-        txtCodigoServicioVenta = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -307,6 +325,299 @@ public class sistemaPrincipal extends javax.swing.JFrame {
         labelTotalapagar2.setText("---");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel8.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel8.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel8.setText("Codigo*");
+        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 360, -1, -1));
+
+        txtCedulaClienteVenta.setBackground(new java.awt.Color(204, 204, 204));
+        txtCedulaClienteVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtCedulaClienteVenta.setForeground(new java.awt.Color(102, 102, 102));
+        txtCedulaClienteVenta.setToolTipText("");
+        txtCedulaClienteVenta.setPreferredSize(new java.awt.Dimension(235, 33));
+        txtCedulaClienteVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCedulaClienteVentaActionPerformed(evt);
+            }
+        });
+        txtCedulaClienteVenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCedulaClienteVentaKeyPressed(evt);
+            }
+        });
+        jPanel3.add(txtCedulaClienteVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 490, 160, -1));
+
+        jLabel9.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel9.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel9.setText("Descripcion");
+        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 360, -1, -1));
+
+        txtDescripcionServicioVenta.setEditable(false);
+        txtDescripcionServicioVenta.setBackground(new java.awt.Color(204, 204, 204));
+        txtDescripcionServicioVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtDescripcionServicioVenta.setForeground(new java.awt.Color(102, 102, 102));
+        txtDescripcionServicioVenta.setToolTipText("");
+        txtDescripcionServicioVenta.setPreferredSize(new java.awt.Dimension(235, 33));
+        jPanel3.add(txtDescripcionServicioVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 380, 180, -1));
+
+        jLabel10.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel10.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel10.setText("Cantidad*");
+        jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 360, -1, -1));
+
+        txtCantidadServicioVenta.setBackground(new java.awt.Color(204, 204, 204));
+        txtCantidadServicioVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtCantidadServicioVenta.setForeground(new java.awt.Color(102, 102, 102));
+        txtCantidadServicioVenta.setToolTipText("");
+        txtCantidadServicioVenta.setPreferredSize(new java.awt.Dimension(235, 33));
+        txtCantidadServicioVenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCantidadServicioVentaKeyPressed(evt);
+            }
+        });
+        jPanel3.add(txtCantidadServicioVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 380, 108, -1));
+
+        jLabel11.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel11.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel11.setText("Precio");
+        jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 360, -1, -1));
+
+        txtPrecioServicioVenta.setEditable(false);
+        txtPrecioServicioVenta.setBackground(new java.awt.Color(204, 204, 204));
+        txtPrecioServicioVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtPrecioServicioVenta.setForeground(new java.awt.Color(102, 102, 102));
+        txtPrecioServicioVenta.setToolTipText("");
+        txtPrecioServicioVenta.setPreferredSize(new java.awt.Dimension(235, 33));
+        jPanel3.add(txtPrecioServicioVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 380, 142, -1));
+
+        jLabel12.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel12.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel12.setText("Cantidad Disponible");
+        jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 70, -1, -1));
+
+        txtStockVenta1.setEditable(false);
+        txtStockVenta1.setBackground(new java.awt.Color(204, 204, 204));
+        txtStockVenta1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtStockVenta1.setForeground(new java.awt.Color(102, 102, 102));
+        txtStockVenta1.setToolTipText("");
+        txtStockVenta1.setPreferredSize(new java.awt.Dimension(235, 33));
+        jPanel3.add(txtStockVenta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 90, 160, -1));
+
+        txtStockVenta.setEditable(false);
+        txtStockVenta.setBackground(new java.awt.Color(204, 204, 204));
+        txtStockVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtStockVenta.setForeground(new java.awt.Color(102, 102, 102));
+        txtStockVenta.setToolTipText("");
+        txtStockVenta.setPreferredSize(new java.awt.Dimension(235, 33));
+        jPanel3.add(txtStockVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 90, 30, -1));
+
+        btnEliminarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/eliminar2.png"))); // NOI18N
+        btnEliminarVenta.setBorder(null);
+        btnEliminarVenta.setBorderPainted(false);
+        btnEliminarVenta.setContentAreaFilled(false);
+        btnEliminarVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarVentaActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnEliminarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 60, -1, -1));
+
+        tableVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        tableVenta.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "COD", "DESCRIPCION", "CANTIDAD", "PRECIO U", "PRECIO TOTAL"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tableVenta.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jScrollPane1.setViewportView(tableVenta);
+
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 903, 140));
+
+        jLabel13.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel13.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel13.setText("Cedula");
+        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 470, -1, -1));
+
+        txtNombreClienteVenta.setEditable(false);
+        txtNombreClienteVenta.setBackground(new java.awt.Color(204, 204, 204));
+        txtNombreClienteVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtNombreClienteVenta.setForeground(new java.awt.Color(102, 102, 102));
+        txtNombreClienteVenta.setToolTipText("");
+        txtNombreClienteVenta.setPreferredSize(new java.awt.Dimension(235, 33));
+        jPanel3.add(txtNombreClienteVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 490, 160, -1));
+
+        btnImprimirVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/imprimir2.png"))); // NOI18N
+        btnImprimirVenta.setBorder(null);
+        btnImprimirVenta.setBorderPainted(false);
+        btnImprimirVenta.setContentAreaFilled(false);
+        btnImprimirVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirVentaActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnImprimirVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 380, 70, 70));
+
+        jLabel14.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel14.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel14.setText("Nombre");
+        jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 470, -1, -1));
+
+        jlabel3.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jlabel3.setForeground(new java.awt.Color(102, 102, 102));
+        jlabel3.setText("Devolución:");
+        jPanel3.add(jlabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 440, -1, -1));
+
+        labelDevolucion.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        labelDevolucion.setForeground(new java.awt.Color(102, 102, 102));
+        labelDevolucion.setText("---");
+        jPanel3.add(labelDevolucion, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 440, -1, -1));
+
+        txtCodigoVenta.setBackground(new java.awt.Color(204, 204, 204));
+        txtCodigoVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtCodigoVenta.setForeground(new java.awt.Color(102, 102, 102));
+        txtCodigoVenta.setToolTipText("");
+        txtCodigoVenta.setPreferredSize(new java.awt.Dimension(235, 33));
+        txtCodigoVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCodigoVentaActionPerformed(evt);
+            }
+        });
+        txtCodigoVenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCodigoVentaKeyPressed(evt);
+            }
+        });
+        jPanel3.add(txtCodigoVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 160, -1));
+
+        jLabel33.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel33.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel33.setText("Codigo*");
+        jPanel3.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, -1, -1));
+
+        jLabel34.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel34.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel34.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel34.setText("Agregar Cliente");
+        jPanel3.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 440, 210, -1));
+
+        txtDescripcionVenta.setEditable(false);
+        txtDescripcionVenta.setBackground(new java.awt.Color(204, 204, 204));
+        txtDescripcionVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtDescripcionVenta.setForeground(new java.awt.Color(102, 102, 102));
+        txtDescripcionVenta.setToolTipText("");
+        txtDescripcionVenta.setPreferredSize(new java.awt.Dimension(235, 33));
+        jPanel3.add(txtDescripcionVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 180, -1));
+
+        jLabel35.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel35.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
+        jLabel35.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel35.setText("Cantidad*");
+        jPanel3.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, -1, -1));
+
+        txtCantidadVenta.setBackground(new java.awt.Color(204, 204, 204));
+        txtCantidadVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtCantidadVenta.setForeground(new java.awt.Color(102, 102, 102));
+        txtCantidadVenta.setToolTipText("");
+        txtCantidadVenta.setPreferredSize(new java.awt.Dimension(235, 33));
+        txtCantidadVenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCantidadVentaKeyPressed(evt);
+            }
+        });
+        jPanel3.add(txtCantidadVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, 108, -1));
+
+        jLabel36.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel36.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
+        jLabel36.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel36.setText("Precio");
+        jPanel3.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 70, -1, -1));
+
+        txtPrecioVenta.setEditable(false);
+        txtPrecioVenta.setBackground(new java.awt.Color(204, 204, 204));
+        txtPrecioVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtPrecioVenta.setForeground(new java.awt.Color(102, 102, 102));
+        txtPrecioVenta.setToolTipText("");
+        txtPrecioVenta.setPreferredSize(new java.awt.Dimension(235, 33));
+        jPanel3.add(txtPrecioVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 90, 142, -1));
+
+        jLabel3.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel3.setText("Valor pagado:");
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 410, -1, -1));
+
+        labelValorPagado.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        labelValorPagado.setForeground(new java.awt.Color(102, 102, 102));
+        labelValorPagado.setText("---");
+        jPanel3.add(labelValorPagado, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 410, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel4.setText("Total a Pagar:");
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 380, -1, -1));
+
+        labelTotalapagar.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        labelTotalapagar.setForeground(new java.awt.Color(102, 102, 102));
+        labelTotalapagar.setText("---");
+        jPanel3.add(labelTotalapagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 380, -1, -1));
+
+        jLabel37.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel37.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
+        jLabel37.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel37.setText("Descripcion");
+        jPanel3.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, -1, -1));
+
+        jLabel38.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel38.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        jLabel38.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel38.setText("Agregar Productos");
+        jPanel3.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, 210, -1));
+
+        txtCodigoServicioVenta.setBackground(new java.awt.Color(204, 204, 204));
+        txtCodigoServicioVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtCodigoServicioVenta.setForeground(new java.awt.Color(102, 102, 102));
+        txtCodigoServicioVenta.setToolTipText("");
+        txtCodigoServicioVenta.setPreferredSize(new java.awt.Dimension(235, 33));
+        txtCodigoServicioVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCodigoServicioVentaActionPerformed(evt);
+            }
+        });
+        txtCodigoServicioVenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCodigoServicioVentaKeyPressed(evt);
+            }
+        });
+        jPanel3.add(txtCodigoServicioVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 380, 160, -1));
+
+        jLabel39.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel39.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        jLabel39.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel39.setText("Agregar Servicios");
+        jPanel3.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 310, 210, -1));
+
+        jTabbedPane8.addTab("Nueva Venta", jPanel3);
 
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -433,11 +744,11 @@ public class sistemaPrincipal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "CEDULA", "NOMBRE", "TELEFONO", "DIRECCION", "RAZON SOCIAL"
+                "ID", "CEDULA", "NOMBRE", "TELEFONO", "DIRECCION"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -785,7 +1096,7 @@ public class sistemaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 998, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(btnPDfVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -807,7 +1118,7 @@ public class sistemaPrincipal extends javax.swing.JFrame {
                         .addComponent(txtIdVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(126, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane8.addTab("Ventas", jPanel6);
@@ -816,301 +1127,14 @@ public class sistemaPrincipal extends javax.swing.JFrame {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1010, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 496, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jTabbedPane8.addTab("tab6", jPanel8);
-
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel8.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel8.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel8.setText("Codigo*");
-        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 350, -1, -1));
-
-        txtCedulaClienteVenta.setBackground(new java.awt.Color(204, 204, 204));
-        txtCedulaClienteVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtCedulaClienteVenta.setForeground(new java.awt.Color(102, 102, 102));
-        txtCedulaClienteVenta.setToolTipText("");
-        txtCedulaClienteVenta.setPreferredSize(new java.awt.Dimension(235, 33));
-        txtCedulaClienteVenta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCedulaClienteVentaActionPerformed(evt);
-            }
-        });
-        txtCedulaClienteVenta.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtCedulaClienteVentaKeyPressed(evt);
-            }
-        });
-        jPanel3.add(txtCedulaClienteVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 450, 160, -1));
-
-        jLabel9.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel9.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel9.setText("Descripcion");
-        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 350, -1, -1));
-
-        txtDescripcionServicioVenta.setEditable(false);
-        txtDescripcionServicioVenta.setBackground(new java.awt.Color(204, 204, 204));
-        txtDescripcionServicioVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtDescripcionServicioVenta.setForeground(new java.awt.Color(102, 102, 102));
-        txtDescripcionServicioVenta.setToolTipText("");
-        txtDescripcionServicioVenta.setPreferredSize(new java.awt.Dimension(235, 33));
-        jPanel3.add(txtDescripcionServicioVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 380, 180, -1));
-
-        jLabel10.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel10.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel10.setText("Cantidad*");
-        jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 350, -1, -1));
-
-        txtCantidadServicioVenta.setBackground(new java.awt.Color(204, 204, 204));
-        txtCantidadServicioVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtCantidadServicioVenta.setForeground(new java.awt.Color(102, 102, 102));
-        txtCantidadServicioVenta.setToolTipText("");
-        txtCantidadServicioVenta.setPreferredSize(new java.awt.Dimension(235, 33));
-        txtCantidadServicioVenta.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtCantidadServicioVentaKeyPressed(evt);
-            }
-        });
-        jPanel3.add(txtCantidadServicioVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 380, 108, -1));
-
-        jLabel11.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel11.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel11.setText("Precio");
-        jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 350, -1, -1));
-
-        txtPrecioServicioVenta.setEditable(false);
-        txtPrecioServicioVenta.setBackground(new java.awt.Color(204, 204, 204));
-        txtPrecioServicioVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtPrecioServicioVenta.setForeground(new java.awt.Color(102, 102, 102));
-        txtPrecioServicioVenta.setToolTipText("");
-        txtPrecioServicioVenta.setPreferredSize(new java.awt.Dimension(235, 33));
-        jPanel3.add(txtPrecioServicioVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 380, 142, -1));
-
-        jLabel12.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel12.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel12.setText("Cantidad Disponible");
-        jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 70, -1, -1));
-
-        txtStockVenta1.setEditable(false);
-        txtStockVenta1.setBackground(new java.awt.Color(204, 204, 204));
-        txtStockVenta1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtStockVenta1.setForeground(new java.awt.Color(102, 102, 102));
-        txtStockVenta1.setToolTipText("");
-        txtStockVenta1.setPreferredSize(new java.awt.Dimension(235, 33));
-        jPanel3.add(txtStockVenta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 90, 160, -1));
-
-        txtStockVenta.setEditable(false);
-        txtStockVenta.setBackground(new java.awt.Color(204, 204, 204));
-        txtStockVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtStockVenta.setForeground(new java.awt.Color(102, 102, 102));
-        txtStockVenta.setToolTipText("");
-        txtStockVenta.setPreferredSize(new java.awt.Dimension(235, 33));
-        jPanel3.add(txtStockVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 90, 30, -1));
-
-        btnEliminarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/eliminar2.png"))); // NOI18N
-        btnEliminarVenta.setBorder(null);
-        btnEliminarVenta.setBorderPainted(false);
-        btnEliminarVenta.setContentAreaFilled(false);
-        btnEliminarVenta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarVentaActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnEliminarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 60, -1, -1));
-
-        tableVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        tableVenta.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "COD", "DESCRIPCION", "CANTIDAD", "PRECIO U", "PRECIO TOTAL"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tableVenta.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        jScrollPane1.setViewportView(tableVenta);
-
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 903, 140));
-
-        jLabel13.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel13.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel13.setText("Rut/Dni");
-        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 430, -1, -1));
-
-        txtNombreClienteVenta.setEditable(false);
-        txtNombreClienteVenta.setBackground(new java.awt.Color(204, 204, 204));
-        txtNombreClienteVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtNombreClienteVenta.setForeground(new java.awt.Color(102, 102, 102));
-        txtNombreClienteVenta.setToolTipText("");
-        txtNombreClienteVenta.setPreferredSize(new java.awt.Dimension(235, 33));
-        jPanel3.add(txtNombreClienteVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 450, 160, -1));
-
-        btnImprimirVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/imprimir2.png"))); // NOI18N
-        btnImprimirVenta.setBorder(null);
-        btnImprimirVenta.setBorderPainted(false);
-        btnImprimirVenta.setContentAreaFilled(false);
-        btnImprimirVenta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImprimirVentaActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnImprimirVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 410, 70, 70));
-
-        jLabel14.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel14.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel14.setText("Nombre");
-        jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 430, -1, -1));
-
-        jlabel3.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        jlabel3.setForeground(new java.awt.Color(102, 102, 102));
-        jlabel3.setText("Devolución:");
-        jPanel3.add(jlabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 470, -1, -1));
-
-        labelDevolucion.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        labelDevolucion.setForeground(new java.awt.Color(102, 102, 102));
-        labelDevolucion.setText("---");
-        jPanel3.add(labelDevolucion, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 470, -1, -1));
-
-        txtCodigoVenta.setBackground(new java.awt.Color(204, 204, 204));
-        txtCodigoVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtCodigoVenta.setForeground(new java.awt.Color(102, 102, 102));
-        txtCodigoVenta.setToolTipText("");
-        txtCodigoVenta.setPreferredSize(new java.awt.Dimension(235, 33));
-        txtCodigoVenta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCodigoVentaActionPerformed(evt);
-            }
-        });
-        txtCodigoVenta.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtCodigoVentaKeyPressed(evt);
-            }
-        });
-        jPanel3.add(txtCodigoVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 160, -1));
-
-        jLabel33.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel33.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
-        jLabel33.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel33.setText("Codigo*");
-        jPanel3.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, -1, -1));
-
-        jLabel34.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel34.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
-        jLabel34.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel34.setText("Agregar Servicios");
-        jPanel3.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 300, 210, -1));
-
-        txtDescripcionVenta.setEditable(false);
-        txtDescripcionVenta.setBackground(new java.awt.Color(204, 204, 204));
-        txtDescripcionVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtDescripcionVenta.setForeground(new java.awt.Color(102, 102, 102));
-        txtDescripcionVenta.setToolTipText("");
-        txtDescripcionVenta.setPreferredSize(new java.awt.Dimension(235, 33));
-        jPanel3.add(txtDescripcionVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 180, -1));
-
-        jLabel35.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel35.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
-        jLabel35.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel35.setText("Cantidad*");
-        jPanel3.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, -1, -1));
-
-        txtCantidadVenta.setBackground(new java.awt.Color(204, 204, 204));
-        txtCantidadVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtCantidadVenta.setForeground(new java.awt.Color(102, 102, 102));
-        txtCantidadVenta.setToolTipText("");
-        txtCantidadVenta.setPreferredSize(new java.awt.Dimension(235, 33));
-        txtCantidadVenta.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtCantidadVentaKeyPressed(evt);
-            }
-        });
-        jPanel3.add(txtCantidadVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, 108, -1));
-
-        jLabel36.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel36.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
-        jLabel36.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel36.setText("Precio");
-        jPanel3.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 70, -1, -1));
-
-        txtPrecioVenta.setEditable(false);
-        txtPrecioVenta.setBackground(new java.awt.Color(204, 204, 204));
-        txtPrecioVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtPrecioVenta.setForeground(new java.awt.Color(102, 102, 102));
-        txtPrecioVenta.setToolTipText("");
-        txtPrecioVenta.setPreferredSize(new java.awt.Dimension(235, 33));
-        jPanel3.add(txtPrecioVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 90, 142, -1));
-
-        jLabel3.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel3.setText("Valor pagado:");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 440, -1, -1));
-
-        labelValorPagado.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        labelValorPagado.setForeground(new java.awt.Color(102, 102, 102));
-        labelValorPagado.setText("---");
-        jPanel3.add(labelValorPagado, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 440, -1, -1));
-
-        jLabel4.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel4.setText("Total a Pagar:");
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 410, -1, -1));
-
-        labelTotalapagar.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        labelTotalapagar.setForeground(new java.awt.Color(102, 102, 102));
-        labelTotalapagar.setText("---");
-        jPanel3.add(labelTotalapagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 410, -1, -1));
-
-        jLabel37.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel37.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
-        jLabel37.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel37.setText("Descripcion");
-        jPanel3.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, -1, -1));
-
-        jLabel38.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel38.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
-        jLabel38.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel38.setText("Agregar Productos");
-        jPanel3.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, 210, -1));
-
-        txtCodigoServicioVenta.setBackground(new java.awt.Color(204, 204, 204));
-        txtCodigoServicioVenta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtCodigoServicioVenta.setForeground(new java.awt.Color(102, 102, 102));
-        txtCodigoServicioVenta.setToolTipText("");
-        txtCodigoServicioVenta.setPreferredSize(new java.awt.Dimension(235, 33));
-        txtCodigoServicioVenta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCodigoServicioVentaActionPerformed(evt);
-            }
-        });
-        txtCodigoServicioVenta.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtCodigoServicioVentaKeyPressed(evt);
-            }
-        });
-        jPanel3.add(txtCodigoServicioVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 380, 160, -1));
-
-        jTabbedPane8.addTab("Nueva Venta", jPanel3);
 
         jPanel2.setBackground(new java.awt.Color(86, 89, 156));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -1220,9 +1244,9 @@ public class sistemaPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(78, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(labelCargoVendedor)
                         .addGap(1, 1, 1)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1259,7 +1283,7 @@ public class sistemaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGap(0, 14, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1285,7 +1309,7 @@ public class sistemaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        jTabbedPane8.setSelectedIndex(4);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -1308,35 +1332,29 @@ public class sistemaPrincipal extends javax.swing.JFrame {
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         limpiarTable();
         listarProductos();
-        jTabbedPane8.setSelectedIndex(4);
+        jTabbedPane8.setSelectedIndex(3);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void btnGuardarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarClienteActionPerformed
-        if (!"".equals(txtIdCliente.getText()) || !"".equals(txtNombreCliente.getText()) || !"".equals(txtTelefonoCliente.getText()) || !"".equals(txtDireccionCliente.getText()) || !"".equals(txtRazonsocialCliente.getText())) {
 
-            String cedula = txtCedulaCliente.getText();
-            String nombre = txtNombreCliente.getText();
-            String direccion = txtDireccionCliente.getText();
+        String cedula = txtCedulaCliente.getText();
 
-            if (exp.validarCedula(cedula) == true) {
-                cl.setCedula(txtCedulaCliente.getText());
-            } else {
-                txtCedulaCliente.setText("");
-                txtCedulaCliente.requestFocus();
-
-            }
-
-            cl.setNombre(txtNombreCliente.getText());
-            cl.setTelefono(txtTelefonoCliente.getText());
-            cl.setDireccion(txtDireccionCliente.getText());
-            cl.setRazon(txtRazonsocialCliente.getText());
-            clDao.RegistrarCliente(cl);
-            JOptionPane.showMessageDialog(null, "Cliente registrado con exito");
-            limpiarTable();
-            listarCliente();
-            limpiarCamposCliente();
+        if (verificarCedulaCliente(cedula) == true) {
+            JOptionPane.showConfirmDialog(null, "el documento del cliente ya esta registrado en el sistema.");
         } else {
-            JOptionPane.showMessageDialog(null, "algunos campos estan vacios o mal escritos");
+            if (!"".equals(txtIdCliente.getText()) || !"".equals(txtNombreCliente.getText()) || !"".equals(txtTelefonoCliente.getText()) || !"".equals(txtDireccionCliente.getText())) {
+                cl.setCedula(txtCedulaCliente.getText());
+                cl.setNombre(txtNombreCliente.getText());
+                cl.setTelefono(txtTelefonoCliente.getText());
+                cl.setDireccion(txtDireccionCliente.getText());
+                clDao.RegistrarCliente(cl);
+                JOptionPane.showMessageDialog(null, "Cliente registrado con exito");
+                limpiarTable();
+                listarCliente();
+                limpiarCamposCliente();
+            } else {
+                JOptionPane.showMessageDialog(null, "algunos campos estan vacios o mal escritos");
+            }
         }
     }//GEN-LAST:event_btnGuardarClienteActionPerformed
 
@@ -1361,22 +1379,29 @@ public class sistemaPrincipal extends javax.swing.JFrame {
         txtNombreCliente.setText(tableCliente.getValueAt(fila, 2).toString());
         txtTelefonoCliente.setText(tableCliente.getValueAt(fila, 3).toString());
         txtDireccionCliente.setText(tableCliente.getValueAt(fila, 4).toString());
-        txtRazonsocialCliente.setText(tableCliente.getValueAt(fila, 5).toString());
     }//GEN-LAST:event_tableClienteMouseClicked
 
     private void btnGuardarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarProductoActionPerformed
-        if (!"".equals(txtCodigoProducto.getText()) || !"".equals(txtDescripcionProducto.getText()) || !"".equals(txtCantidadProducto.getText()) || !"".equals(txtPrecioProducto.getText())) {
-            pro.setCodigo(txtCodigoProducto.getText());
-            pro.setNombre(txtDescripcionProducto.getText());
-            pro.setStock(Integer.parseInt(txtCantidadProducto.getText()));
-            pro.setPrecio(Double.parseDouble(txtPrecioProducto.getText()));
-            proDao.registrarProducto(pro);
-            JOptionPane.showMessageDialog(null, "Producto registrado con exito.");
-            limpiarTable();
-            listarProductos();
-            limpiarCamposProductos();
+
+        String codigo = txtCodigoProducto.getText();
+
+        if (verificarCodigoProducto(codigo) == true) {
+            JOptionPane.showMessageDialog(null, "El codigo del producto ya se encuentra registrado.");
         } else {
-            JOptionPane.showMessageDialog(null, "uno o algunos campos estan vacios");
+
+            if (!"".equals(txtCodigoProducto.getText()) || !"".equals(txtDescripcionProducto.getText()) || !"".equals(txtCantidadProducto.getText()) || !"".equals(txtPrecioProducto.getText())) {
+                pro.setCodigo(txtCodigoProducto.getText());
+                pro.setNombre(txtDescripcionProducto.getText());
+                pro.setStock(Integer.parseInt(txtCantidadProducto.getText()));
+                pro.setPrecio(Double.parseDouble(txtPrecioProducto.getText()));
+                proDao.registrarProducto(pro);
+                JOptionPane.showMessageDialog(null, "Producto registrado con exito.");
+                limpiarTable();
+                listarProductos();
+                limpiarCamposProductos();
+            } else {
+                JOptionPane.showMessageDialog(null, "uno o algunos campos estan vacios");
+            }
         }
     }//GEN-LAST:event_btnGuardarProductoActionPerformed
 
@@ -1399,18 +1424,27 @@ public class sistemaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarServicioActionPerformed
 
     private void btnGuardarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarServicioActionPerformed
-        if (!"".equals(txtCodigoServicio.getText()) || !"".equals(txtNombreServicio.getText()) || !"".equals(txtPrecioServicio.getText())) {
 
-            sr.setCodigo(txtCodigoServicio.getText());
-            sr.setNombre(txtNombreServicio.getText());
-            sr.setPrecio(Double.parseDouble(txtPrecioServicio.getText()));
-            srDao.registrarServicio(sr);
-            JOptionPane.showMessageDialog(null, "Proveedor registrado con exito");
-            limpiarTable();
-            listarServicios();
+        String codigo = txtCodigoServicio.getText();
+
+        if (verificarCodigoServicio(codigo) == true) {
+            JOptionPane.showMessageDialog(null, "el codigo del servicio ya se encuentra registrado en el sistema");
         } else {
-            JOptionPane.showMessageDialog(null, "Algunos campos estan vacios o mal escritos");
+            if (!"".equals(txtCodigoServicio.getText()) || !"".equals(txtNombreServicio.getText()) || !"".equals(txtPrecioServicio.getText())) {
+
+                sr.setCodigo(txtCodigoServicio.getText());
+                sr.setNombre(txtNombreServicio.getText());
+                sr.setPrecio(Double.parseDouble(txtPrecioServicio.getText()));
+                srDao.registrarServicio(sr);
+                JOptionPane.showMessageDialog(null, "Proveedor registrado con exito");
+                limpiarTable();
+                listarServicios();
+            } else {
+                JOptionPane.showMessageDialog(null, "Algunos campos estan vacios o mal escritos");
+            }
         }
+
+
     }//GEN-LAST:event_btnGuardarServicioActionPerformed
 
     private void btnEliminarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarServicioActionPerformed
@@ -1439,12 +1473,11 @@ public class sistemaPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione un Cliente");
         } else {
 
-            if (!"".equals(txtCedulaCliente.getText()) && !"".equals(txtNombreCliente.getText()) && !"".equals(txtTelefonoCliente.getText()) && !"".equals(txtDireccionCliente.getText()) && !"".equals(txtRazonsocialCliente.getText())) {
+            if (!"".equals(txtCedulaCliente.getText()) && !"".equals(txtNombreCliente.getText()) && !"".equals(txtTelefonoCliente.getText()) && !"".equals(txtDireccionCliente.getText())) {
                 cl.setCedula(txtCedulaCliente.getText());
                 cl.setNombre(txtNombreCliente.getText());
                 cl.setTelefono(txtTelefonoCliente.getText());
                 cl.setDireccion(txtDireccionCliente.getText());
-                cl.setRazon(txtRazonsocialCliente.getText());
                 cl.setId(Integer.parseInt(txtIdCliente.getText()));
                 clDao.ModificarCliente(cl);
                 limpiarTable();
@@ -1720,9 +1753,28 @@ public class sistemaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarVentaActionPerformed
 
     private void btnImprimirVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirVentaActionPerformed
-        registrarVenta();
-        registrarDetalle();
-        actualizarStock();
+
+        if (tableVenta.getRowCount() > 0) {
+
+            descuento();
+            registrarVenta();
+            registrarDetalle();
+            actualizarStock();
+            //aplicar condicion de imprimir el pdf o solo registrar la venta. 
+            int sw = JOptionPane.showConfirmDialog(null, "¿Desea imprimir la factura?");
+
+            if (sw == 0) {
+                pdf();
+            }
+            JOptionPane.showMessageDialog(null, "Venta realizada con exito.");
+            limpiarTablaVenta();
+            limpiarClienteVenta();
+
+        }
+        JOptionPane.showMessageDialog(null, "para Registrar la ventaprimero tienes\n que registrar algunos productos");
+        txtCodigoVenta.requestFocus();
+
+
     }//GEN-LAST:event_btnImprimirVentaActionPerformed
 
     /**
@@ -1813,6 +1865,7 @@ public class sistemaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -1963,6 +2016,177 @@ public class sistemaPrincipal extends javax.swing.JFrame {
 
         }
 
+    }
+
+    private void limpiarTablaVenta() {
+        tmp = (DefaultTableModel) tableVenta.getModel();
+        int fila = tableVenta.getRowCount();
+
+        for (int i = 0; i < fila; i++) {
+            tmp.removeRow(0);
+        }
+
+    }
+
+    private void limpiarClienteVenta() {
+        txtCedulaClienteVenta.setText("");
+        txtNombreClienteVenta.setText("");
+
+    }
+
+    private void descuento() {
+        montoPago = Double.parseDouble(JOptionPane.showInputDialog("valor pagado"));
+
+        while (montoPago < totalPagar) {
+            JOptionPane.showMessageDialog(null, "saldo insuficiente, eristrar nuevo saldo.");
+            montoPago = Double.parseDouble(JOptionPane.showInputDialog("valor pagado"));
+        }
+        devolucion = montoPago - totalPagar;
+        labelDevolucion.setText(String.format("%.2f", devolucion));
+        labelValorPagado.setText(String.format("%.2f", montoPago));
+
+    }
+
+    private void pdf() {
+        try {
+            FileOutputStream archivo;
+            File file = new File("src/pdf/venta.pdf");
+            archivo = new FileOutputStream(file);
+            Document doc = new Document();
+            PdfWriter.getInstance(doc, archivo);
+            doc.open();
+            Image img = Image.getInstance("src/img/Group39.png");
+            Paragraph fecha = new Paragraph();
+            Font negrita = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK);
+            fecha.add(Chunk.NEWLINE);
+            Date date = new Date();
+            fecha.add("Factura: 1\n" + "FECHA: " + new SimpleDateFormat("dd-mm-yyyy").format(date) + "\n\n");
+
+            PdfPTable Encabezado = new PdfPTable(4);
+            Encabezado.setWidthPercentage(100);
+            Encabezado.getDefaultCell().setBorder(0);
+            float[] ColumnaEncabezado = new float[]{20f, 30f, 70f, 40f};
+            Encabezado.setWidths(ColumnaEncabezado);
+            Encabezado.setHorizontalAlignment(Element.ALIGN_LEFT);
+
+            Encabezado.addCell(img);
+            String ruc = "54546545654";
+            String nom = "Taller el púente";
+            String tel = "3107428975";
+            String dir = "Paraiso tulapa";
+            String ra = "Taller el puente";
+
+            Encabezado.addCell("");
+            Encabezado.addCell("Ruc: " + ruc + "\nnombre: " + nom + "\nTelefono: " + tel + "\nDireccion: " + dir + "\nRazon" + ra);
+            Encabezado.addCell(fecha);
+            Encabezado.addCell(fecha);
+            doc.add(Encabezado);
+
+            Paragraph cli = new Paragraph();
+            cli.add(Chunk.NEWLINE);
+            cli.add("datos de los clientes" + "\n\n");
+            doc.add(cli);
+
+            PdfPTable tablaCli = new PdfPTable(4);
+            tablaCli.setWidthPercentage(100);
+            tablaCli.getDefaultCell().setBorder(0);
+            float[] ColumnaCli = new float[]{20f, 30f, 70f, 40f};
+            tablaCli.setWidths(ColumnaCli);
+            tablaCli.setHorizontalAlignment(Element.ALIGN_LEFT);
+            PdfPCell cl1 = new PdfPCell(new Phrase("Cedula", negrita));
+            PdfPCell cl2 = new PdfPCell(new Phrase("Cliente", negrita));
+
+            cl1.setBorder(0);
+            cl2.setBorder(0);
+
+            tablaCli.addCell(cl1);
+            tablaCli.addCell(cl2);
+            tablaCli.addCell(txtCedulaClienteVenta.getText());
+            tablaCli.addCell(txtNombreClienteVenta.getText());
+
+            doc.add(tablaCli);
+
+            //productos
+            PdfPTable tablaPro = new PdfPTable(4);
+            tablaPro.setWidthPercentage(100);
+            tablaPro.getDefaultCell().setBorder(0);
+            float[] ColumnaPro = new float[]{10f, 50f, 15f, 20f};
+            tablaPro.setWidths(ColumnaPro);
+            tablaPro.setHorizontalAlignment(Element.ALIGN_LEFT);
+            PdfPCell pro1 = new PdfPCell(new Phrase("Cantidad", negrita));
+            PdfPCell pro2 = new PdfPCell(new Phrase("Descripcion", negrita));
+            PdfPCell pro3 = new PdfPCell(new Phrase("Precio Unitario", negrita));
+            PdfPCell pro4 = new PdfPCell(new Phrase("Precio Total", negrita));
+
+            pro1.setBorder(0);
+            pro2.setBorder(0);
+            pro3.setBorder(0);
+            pro4.setBorder(0);
+
+            pro1.setBackgroundColor(BaseColor.DARK_GRAY);
+            pro2.setBackgroundColor(BaseColor.DARK_GRAY);
+            pro3.setBackgroundColor(BaseColor.DARK_GRAY);
+            pro4.setBackgroundColor(BaseColor.DARK_GRAY);
+
+            tablaPro.addCell(pro1);
+            tablaPro.addCell(pro2);
+            tablaPro.addCell(pro3);
+            tablaPro.addCell(pro4);
+
+            for (int i = 0; i < tableVenta.getRowCount(); i++) {
+
+                String producto = tableVenta.getValueAt(i, 1).toString();
+                String cantidad = tableVenta.getValueAt(i, 2).toString();
+                String precio = tableVenta.getValueAt(i, 3).toString();
+                String total = tableVenta.getValueAt(i, 4).toString();
+
+                tablaPro.addCell(cantidad);
+                tablaPro.addCell(producto);
+                tablaPro.addCell(precio);
+                tablaPro.addCell(total);
+
+            }
+            doc.add(tablaPro);
+
+            doc.close();
+            archivo.close();
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    public boolean verificarCedulaCliente(String cedula) {
+        List<Cliente> listarCL = clDao.listarClientes();
+        for (Cliente cliente : listarCL) {
+            if (cliente.getCedula().equals(cedula)) {
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    public boolean verificarCodigoServicio(String codigo) {
+        List<Servicio> listarSr = srDao.listarservicios();
+        for (Servicio servicio : listarSr) {
+            if (servicio.getCodigo().equals(codigo)) {
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    public boolean verificarCodigoProducto(String codigo) {
+        List<Producto> listarPro = proDao.listarProductos();
+        for (Producto pro : listarPro) {
+            if (pro.getCodigo().equals(codigo)) {
+                return true;
+            }
+
+        }
+        return false;
     }
 
 }
